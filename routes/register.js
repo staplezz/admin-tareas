@@ -2,29 +2,29 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const Usuario = require('../models/usuario');
+const passport = require('passport');
 
-router.post('/', function (req, res) {
-    let body = req.body;
+router.get("/", function (req, res) {
+    res.render('register/register');
+})
 
-    let { nombre, email, password} = body;
+router.post("/", function (req, res){
+    let { nombre, username, password} = req.body;
+    
+    // Sanity check
+    console.log(nombre);
+    console.log(username);
+    console.log(password);
 
-    let usuario = new Usuario({
-        nombre,
-        email,
-        password: bcrypt.hashSync(password, 10)
-    });
-
-    usuario.save((err, usuarioDB) => {
-        if (err) {
-            return res.status(400).json({
-                err
-            });
-        } 
-        res.json({
-            ok: true,
-            usuario: usuarioDB
-        });
+    Usuario.register(new Usuario({username: username, nombre: nombre}), password, function(err, user){
+        if(err){
+            // Regresamos al registro y mostramos el error al usuario.
+            //res.render('register/register', {error: err.message})
+        } else {
+            // Enviamos al login con mensaje de éxito.
+            res.render('login/login', {message: '¡Usuario registrado con éxito!'});
+        }
     })
-});
+})
 
 module.exports = router;

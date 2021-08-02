@@ -1,23 +1,44 @@
 extends ../layout
 
 block content
-    div.text-center
-        form(class="form-signin" method="POST" action="/login")
-            #error
-                if error
-                    p.text-danger Error!!!
-            - var h1Classes = ['h3', 'mb-3', 'font-weight-normal']
-                h1(class=h1Classes) Bienvenido a Noteras
-                h2(class=h1Classes) A continuación ingresa tus credenciales:
-                //-input email
-                label( for="inputEmail" class="sr-only") Email address
-                input(type="email" name="email" id="inputEmail" class="form-control" placeholder="Correo electrónico" required autofocus)
-                //-input password
-                label(for="inputPassword" class="sr-only") Password
-                input(type="password" name="password" id="inputPassword" 
-            class="form-control" placeholder="Contraseña" required)
-                //-signIn button
-                - var buttonClass=['btn', 'btn-lg', 'btn-primary', 'btn-block'];
-                button(class=buttonClass type="submit") Ingresar
-                - var pClasses=['mt-5', 'mb-3', 'text-muted'];
-                    p(class=pClasses) © 2021
+    //- if error
+    //-     .alert.alert-success.alert-dismissible.fade.show(role='alert')
+    //-         |  #{error}
+    //-         button.btn-close(type='button' data-bs-dismiss='alert' aria-label='Close')
+
+    section.h-100
+        .container.h-100
+            .row.justify-content-sm-center.h-100
+                .col-xxl-4.col-xl-5.col-lg-5.col-md-7.col-sm-9
+                    .text-center.my-5
+                        img(src='images/noteras.png' alt='logo' width='100')
+                        h1.fs-2.title Bienvenido a Noteras
+                        h5.align-left "Anota tu vida"
+                    .card.shadow-lg
+                        .card-body.p-5
+                            h1.fs-4.card-title.fw-bold.mb-4 Ingresar
+                            form.needs-validation(method='POST' novalidate='' autocomplete='off' action='/login')
+                                .mb-3
+                                    label.mb-2.text-muted(for='email') Correo electrónico
+                                    input#email.form-control(type='email' name='username' value='' required='' autofocus='')
+                                    .invalid-feedback
+                                        | El email ingresado es inválido
+                                .mb-3
+                                    .mb-2.w-100
+                                        label.text-muted(for='password') Contraseña
+                                    input#password.form-control(type='password' name='password' required='')
+                                    .invalid-feedback
+                                        | Favor de ingresar una contraseña
+                                .d-flex.align-items-center
+                                    .form-check
+                                        input#remember.form-check-input(type='checkbox' name='remember')
+                                        label.form-check-label(for='remember') Recordarme
+                                    button.btn.btn-primary.ms-auto(type='submit')
+                                        | Ingresar
+                        .card-footer.py-3.border-0
+                            .text-center
+                            | ¿No tienes cuenta? 
+                            a.text-dark(href='/register') Crear cuenta
+                    .text-center.mt-5.text-muted
+                        | Copyright &copy; 2021 &mdash; Chilliware
+    script(src='js/login.js')
