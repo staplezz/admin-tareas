@@ -1,10 +1,14 @@
 extends ../layout
 
 block content
-    //- if error
-    //-     .alert.alert-success.alert-dismissible.fade.show(role='alert')
-    //-         |  #{error}
-    //-         button.btn-close(type='button' data-bs-dismiss='alert' aria-label='Close')
+    if message.show && !message.isError
+        .alert.alert-success.alert-dismissible.fade.show(role='alert')
+            |  #{message.message}
+            button.btn-close(type='button' data-bs-dismiss='alert' aria-label='Close')
+    if message.show && message.isError
+        .alert.alert-danger.alert-dismissible.fade.show(role='alert')
+            |  #{message.error}
+            button.btn-close(type='button' data-bs-dismiss='alert' aria-label='Close')
 
     section.h-100
         .container.h-100
