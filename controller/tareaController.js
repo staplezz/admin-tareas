@@ -4,9 +4,9 @@ const Tarea = require('../models/tarea');
 exports.get_tareas = async function(req, res) {
     try {
         tareas = await Tarea.find({usuario: req.user._id}).lean();
-        res.json(tareas);
+        return tareas;
     } catch (error) {
-        res.send(error);
+        return error;
     }
     
 }
@@ -18,23 +18,22 @@ exports.inserta_tarea = async function(req, res) {
             usuario: req.user._id,
             tarea:req.body.tarea,
         });
+        res.redirect('/tareas');
     } catch(err) {
         res.send(error);
         console.log(err);
     }
-    console.log('Tarea insertada en BDD');
 }
 
 // Elimina una tarea del usuario.
 exports.elimina_tarea = function(req, res) {
-    try {
-        Tarea.findByIdAndDelete(req.body.tarea_id);
-        res.send({
-            removed: true
-        })
-    } catch(err) {
-        res.send(err);
-    }
+    Tarea.findByIdAndDelete(req.params.tarea_id, (error, data) => {
+        if(error){
+            throw error;
+        } else {
+            res.redirect('/tareas');
+        }
+    });
 }
 
 // Edita una tarea del usuario.

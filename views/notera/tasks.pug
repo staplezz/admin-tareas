@@ -12,15 +12,21 @@ html
         // FA Icons
         script(src="https://kit.fontawesome.com/802c6138f5.js", crossorigin="anonymous")
 
-        include ../navbar.pug
+        // Checkbox CSS.
+        link(rel="stylesheet", href="/stylesheets/checkbox.css")
 
+        include ../navbar.pug
     body
+        h3.text-center
+            | Bienvenido: 
+            small.text-muted
+                | #{nombreUser}
         .card.w-50.mx-auto.mt-5
             .card-body
-                h3.card-title.text-center.mb-4
+                h3.card-title.text-center.mb-2
                     | Mis tareas
 
-            form(method='POST' autocomplete='off' action='tareas/insertaTarea')
+            form(method='POST' autocomplete='off' action='tareas/insertaTarea').mb-3
                 .row.justify-content-center
                     .col.col-7
                         input.form-control(type='text', name='tarea' placeholder='Agregar tarea', required='true')
@@ -30,50 +36,32 @@ html
 
             .div.list-wrapper
                 table.table 
-                    thead
+                    thead.text-center
                         tr
                             th(scope="col")
                                 | Tarea
                             th(scope="col")
                                 | Acción
                     tbody
-                        tr
-                            td
-                                .form-check
-                                    input#flexCheckDefault.form-check-input(type='checkbox' value='')
-                                    label.form-check-label(for='flexCheckDefault')
-                                        | Checked checkbox
-                            td
-                                i.fa-lg.fas.fa-edit
-                                i.fa-lg.far.fa-trash-alt
-                        tr
-                            td
-                                .form-check
-                                    input#flexCheckDefault.form-check-input(type='checkbox' value='')
-                                    label.form-check-label(for='flexCheckDefault')
-                                        | Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam quo quaerat impedit, non repudiandae error deserunt ullam sequi debitis voluptatibus id nihil nulla, ad, laudantium ut ipsa. Totam, alias consequuntur.
-                            td
-                                i.fa-lg.fas.fa-edit
-                                i.fa-lg.far.fa-trash-alt
-                        tr
-                            td
-                                .form-check
-                                    input#flexCheckDefault.form-check-input(type='checkbox' value='')
-                                    label.form-check-label(for='flexCheckDefault')
-                                        | Checked checkbox
-                            td
-                                i.fa-lg.fas.fa-edit
-                                i.fa-lg.far.fa-trash-alt
-                        tr
-                            td
-                                .form-check
-                                    input#flexCheckDefault.form-check-input(type='checkbox' value='')
-                                    label.form-check-label(for='flexCheckDefault')
-                                        | Checked checkbox
-                            td
-                                i.fa-lg.fas.fa-edit
-                                i.fa-lg.far.fa-trash-alt                                
-
+                        if(tareas.length)
+                            each tarea in tareas
+                                tr
+                                    td
+                                        .form-check
+                                            input(type='checkbox')
+                                            label.form-check-label().mx-2
+                                                | #{tarea.tarea}
+                                    td.text-center.align-middle
+                                        .btn-group
+                                            form(method='POST', action=`tareas/borrar/${tarea._id}`, type='submit').mx-2
+                                                button.btn.btn-warning(onclick="return confirm('¿Estás seguro de borrar esta tarea? Esta acción no se puede deshacer.');")
+                                                    | Editar
+                                            form(method='POST', action=`tareas/borrar/${tarea._id}`, type='submit').mx-3
+                                                button.btn.btn-danger(onclick="return confirm('¿Estás seguro de borrar esta tarea? Esta acción no se puede deshacer.');")
+                                                    | Borrar
+                        else
+                            h4.card-subtitle.text-center.my-4
+                                | ¡Aún no tienes tareas! Intenta agregando una arriba. 
 
     include ../footer.pug
 
