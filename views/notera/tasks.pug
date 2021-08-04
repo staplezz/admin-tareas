@@ -1,5 +1,80 @@
-extends ../layout
+doctype html 
+html 
+    head 
+        title Noteras: Mis tareas
 
-block content
-    include ../navbar.pug
-    h2= 'This page is only visible to logged in users'
+        // Page icon.
+        link(rel='icon', href='/images/noteras.png')
+
+        // Bootstrap 5
+        link(rel='stylesheet', href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css', integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC", crossorigin="anonymous")
+
+        // FA Icons
+        script(src="https://kit.fontawesome.com/802c6138f5.js", crossorigin="anonymous")
+
+        include ../navbar.pug
+
+    body
+        .card.w-50.mx-auto.mt-5
+            .card-body
+                h3.card-title.text-center.mb-4
+                    | Mis tareas
+
+            form(method='POST' autocomplete='off' action='tareas/insertaTarea')
+                .row.justify-content-center
+                    .col.col-7
+                        input.form-control(type='text', name='tarea' placeholder='Agregar tarea', required='true')
+                    .col.col-auto
+                        button.btn.btn-primary.ms-auto(type='submit')
+                            | Agregar
+
+            .div.list-wrapper
+                table.table 
+                    thead
+                        tr
+                            th(scope="col")
+                                | Tarea
+                            th(scope="col")
+                                | Acción
+                    tbody
+                        tr
+                            td
+                                .form-check
+                                    input#flexCheckDefault.form-check-input(type='checkbox' value='')
+                                    label.form-check-label(for='flexCheckDefault')
+                                        | Checked checkbox
+                            td
+                                i.fa-lg.fas.fa-edit
+                                i.fa-lg.far.fa-trash-alt
+                        tr
+                            td
+                                .form-check
+                                    input#flexCheckDefault.form-check-input(type='checkbox' value='')
+                                    label.form-check-label(for='flexCheckDefault')
+                                        | Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam quo quaerat impedit, non repudiandae error deserunt ullam sequi debitis voluptatibus id nihil nulla, ad, laudantium ut ipsa. Totam, alias consequuntur.
+                            td
+                                i.fa-lg.fas.fa-edit
+                                i.fa-lg.far.fa-trash-alt
+                        tr
+                            td
+                                .form-check
+                                    input#flexCheckDefault.form-check-input(type='checkbox' value='')
+                                    label.form-check-label(for='flexCheckDefault')
+                                        | Checked checkbox
+                            td
+                                i.fa-lg.fas.fa-edit
+                                i.fa-lg.far.fa-trash-alt
+                        tr
+                            td
+                                .form-check
+                                    input#flexCheckDefault.form-check-input(type='checkbox' value='')
+                                    label.form-check-label(for='flexCheckDefault')
+                                        | Checked checkbox
+                            td
+                                i.fa-lg.fas.fa-edit
+                                i.fa-lg.far.fa-trash-alt                                
+
+
+    include ../footer.pug
+
+    script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js', integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM", crossorigin="anonymous")

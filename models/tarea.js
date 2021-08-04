@@ -18,7 +18,7 @@ let tareaSchema = new Schema({
     // Nos dice si está completada o no.
     completada: {
         type: Boolean,
-        default: False
+        default: false
     }
 },
 // Timestamps.
