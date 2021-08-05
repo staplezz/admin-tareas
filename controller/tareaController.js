@@ -38,24 +38,22 @@ exports.elimina_tarea = function(req, res) {
 
 // Edita una tarea del usuario.
 exports.edita_tarea = function(req, res) {
-    try {
-        Tarea.findByIdAndUpdate(req.body.tarea_id, {tarea: req.body.tarea, estado: req.body.estado});
-        res.send({
-            updated: true
-        })
-    } catch(err) {
-        res.send(err);
-    }
+    Tarea.findByIdAndUpdate(req.params.tarea_id, {tarea: req.body.tarea}, {useFindAndModify: false}, (error, data) => {
+        if(error) {
+            throw error;
+        } else {
+            res.redirect('/tareas');
+        }
+    });
 }
 
 // Actualiza el estado de una tarea del usuario.
 exports.actualiza_estado_tarea = function(req, res) {
-    try {
-        Tarea.findByIdAndUpdate(req.body.tarea_id, {estado: req.body.estado});
-        res.send({
-            updated: true
-        })
-    } catch(err) {
-        res.send(err)
-    }
+    Tarea.findByIdAndUpdate(req.params.tarea_id, {completada: req.body.checked}, {useFindAndModify: false}, (error, data) => {
+        if(error) {
+            throw error;
+        } else {
+            res.redirect('/tareas');
+        }
+    });
 }

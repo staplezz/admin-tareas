@@ -44,21 +44,48 @@ html
                                 | Acción
                     tbody
                         if(tareas.length)
+                            - var n = 0;
                             each tarea in tareas
+                                - n++;
                                 tr
                                     td
-                                        .form-check
-                                            input(type='checkbox')
-                                            label.form-check-label().mx-2
-                                                | #{tarea.tarea}
+                                        if(tarea.completada)
+                                            form(method="POST" action=`/tareas/actualizar/${tarea._id}`)
+                                                input.form-check-input(name="checked" checked='' type="checkbox" value="false" onChange="this.form.submit()")
+                                                label.form-check-label().mx-2
+                                                    | #{tarea.tarea}
+                                        else
+                                            form(method="POST" action=`/tareas/actualizar/${tarea._id}`)
+                                                input.form-check-input(name="checked" type="checkbox" value="true" onChange="this.form.submit()")
+                                                label.form-check-label().mx-2
+                                                    | #{tarea.tarea}
                                     td.text-center.align-middle
                                         .btn-group
-                                            form(method='POST', action=`tareas/borrar/${tarea._id}`, type='submit').mx-2
-                                                button.btn.btn-warning(onclick="return confirm('¿Estás seguro de borrar esta tarea? Esta acción no se puede deshacer.');")
+                                            //button trigger modal.
+                                            .div
+                                                button.btn.btn-secondary(type='button' data-bs-toggle='modal' data-bs-target='#task-' + n)
                                                     | Editar
+
+                                            // Modal para editar.
+                                            nav.modal.fade(tabindex='-1' aria-hidden='true' id='task-' + n)
+                                                .modal-dialog.modal-dialog-centered
+                                                    .modal-content
+                                                        form(method='POST' autocomplete='off' action=`tareas/editar/${tarea._id}`).mb-3
+                                                            .modal-header
+                                                                h5#exampleModalLabel.modal-title Editar tarea
+                                                                button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+                                                            .modal-body                                    
+                                                                .input-group.flex-nowrap
+                                                                    span#addon-wrapping.input-group-text Tarea
+                                                                    input.form-control(type='text' name='tarea' value=`${tarea.tarea}` aria-describedby='addon-wrapping' required='' autofocus='')
+                                                            .modal-footer
+                                                                button.btn.btn-secondary(type='button' data-bs-dismiss='modal') Cancelar
+                                                                button.btn.btn-primary(type='submit') Guardar cambios
+
                                             form(method='POST', action=`tareas/borrar/${tarea._id}`, type='submit').mx-3
                                                 button.btn.btn-danger(onclick="return confirm('¿Estás seguro de borrar esta tarea? Esta acción no se puede deshacer.');")
                                                     | Borrar
+                                
                         else
                             h4.card-subtitle.text-center.my-4
                                 | ¡Aún no tienes tareas! Intenta agregando una arriba. 

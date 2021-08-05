@@ -24,4 +24,10 @@ router.get('/obtenerTareas', isLoggedIn, tarea_controller.get_tareas);
 /* petición POST para eliminar una tarea del usuario. */
 router.post('/borrar/:tarea_id', isLoggedIn, tarea_controller.elimina_tarea);
 
+/* petición POST para editar una tarea del usuario. */
+router.post('/editar/:tarea_id', isLoggedIn, tarea_controller.edita_tarea);
+
+/* petición POST para actualizar el estado de una tarea del usuario. */
+router.post('/actualizar/:tarea_id', isLoggedIn, tarea_controller.actualiza_estado_tarea);
+
 module.exports = router;
