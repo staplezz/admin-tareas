@@ -3,7 +3,6 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const mongoose = require('mongoose');
 const passport = require('passport');
 const LocalStrategy = require("passport-local")
 const Usuario = require('./models/usuario');
@@ -53,16 +52,6 @@ app.use('/logout', logoutRouter);
 app.get('*', (req, res) => {
   res.redirect('/')
 })
-
-// Conexión con BDD.
-mongoose.connect(process.env.MONGODB_ATLAS, {
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useUnifiedTopology: true
-}, (err) => {
-  if (err) throw err;
-  console.log("Base de datos online");
-});
 
 
 // Catch 404 y redireccionar al error handler.
