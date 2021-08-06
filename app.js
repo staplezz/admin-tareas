@@ -13,7 +13,6 @@ require('dotenv').config();
 
 
 // Rutas de la app.
-var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
 var registerRouter = require('./routes/register');
 var tasksRouter = require('./routes/task');
@@ -44,11 +43,16 @@ passport.serializeUser(Usuario.serializeUser());
 passport.deserializeUser(Usuario.deserializeUser());
 
 // Configuración de rutas.
+app.use('/', loginRouter);
 app.use('/login', loginRouter);
 app.use('/register', registerRouter);
 app.use('/tareas', tasksRouter);
-app.use('/', indexRouter);
 app.use('/logout', logoutRouter);
+
+// Wildcard redirect.
+app.get('*', (req, res) => {
+  res.redirect('/')
+})
 
 // Conexión con BDD.
 mongoose.connect(process.env.MONGODB_ATLAS, {

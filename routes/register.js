@@ -3,11 +3,9 @@ const router = express.Router();
 const Usuario = require('../models/usuario');
 
 router.get("/", function (req, res) {
-
     error = {
         show: false
     }
-
     res.render('register/register', {error: error});
 })
 

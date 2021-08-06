@@ -4,7 +4,7 @@ const router = express.Router();
 // Logout de la aplicación.
 router.get('/', function (req, res, next) {
     req.logout();
-    res.redirect('/login');
+    res.redirect('/');
 });
 
 module.exports = router;
